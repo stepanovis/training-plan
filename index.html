@@ -35,39 +35,44 @@
     }
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     max-width: 680px;
     margin: 0 auto;
     padding: 36px 20px 80px;
+    font-size: 17px;
     line-height: 1.6;
     color: var(--ink);
     background: var(--bg);
+  }
+  @media (max-width: 480px) {
+    body { font-size: 18px; padding: 28px 16px 72px; }
   }
   a { color: var(--accent); }
   .muted { color: var(--ink-muted); }
 
   h2 {
-    font-size: 1.08rem;
+    font-size: 1.15rem;
     font-weight: 700;
     margin: 32px 0 12px;
     letter-spacing: 0.01em;
     color: var(--accent);
   }
-  h2 .day-tag { display: inline-block; font-weight: 400; font-size: 0.85rem; margin-left: 8px; color: var(--ink-muted); }
-  h3 { font-size: 0.82rem; font-weight: 700; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+  h2 .day-tag { display: inline-block; font-weight: 400; font-size: 0.88rem; margin-left: 8px; color: var(--ink-muted); }
+  h3 { font-size: 0.88rem; font-weight: 700; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 
   p { margin: 8px 0; }
   ol, ul { margin: 6px 0 0; padding-left: 20px; }
   li { margin: 4px 0; }
-  footer { margin-top: 56px; font-size: 0.8rem; }
+  footer { margin-top: 56px; font-size: 0.85rem; }
 
   .day-nav { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0 6px; }
   .day-pill {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 7px 13px;
+    padding: 8px 14px;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: none;
@@ -78,7 +83,7 @@
   }
   .day-pill.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
   .show-all-toggle {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     background: none;
     border: none;
     color: var(--accent);
@@ -103,10 +108,10 @@
   }
   summary::-webkit-details-marker { display: none; }
   summary .ex-name { font-weight: 500; flex: 1 1 auto; padding-right: 10px; }
-  summary .ex-sets { font-size: 0.84rem; font-weight: 600; color: var(--accent-soft); white-space: nowrap; margin-left: auto; }
-  summary::after { content: "+"; font-size: 1.05rem; color: var(--ink-muted); flex-shrink: 0; margin-left: 8px; }
+  summary .ex-sets { font-size: 0.92rem; font-weight: 600; color: var(--accent-soft); white-space: nowrap; margin-left: auto; }
+  summary::after { content: "+"; font-size: 1.15rem; color: var(--ink-muted); flex-shrink: 0; margin-left: 8px; }
   details[open] summary::after { content: "–"; }
-  details p { margin: 10px 0 0; font-size: 0.88rem; color: var(--ink-muted); }
+  details p { margin: 10px 0 0; font-size: 0.95rem; color: var(--ink-muted); }
 </style>
 </head>
 <body>
@@ -399,7 +404,7 @@
   <li><strong>Вода:</strong> ~3 л/день в обычные дни. В дни с кардио — конкретика в блоках среды и субботы.</li>
   <li><strong>Тайминг:</strong> белок+углеводы за 1-2 часа до тренировки, белок в течение нескольких часов после.</li>
 </ul>
-<p class="muted" style="font-size:0.82rem">Это уже закрывает белок (~150-160 г) и разумный объём углеводов — ничего взвешивать по формулам не нужно, просто готовишь эти продукты в этом количестве.</p>
+<p class="muted" style="font-size:0.9rem">Это уже закрывает белок (~150-160 г) и разумный объём углеводов — ничего взвешивать по формулам не нужно, просто готовишь эти продукты в этом количестве.</p>
 
 
 <h2>Ограничения — прочитать перед стартом</h2>
