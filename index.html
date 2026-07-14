@@ -22,25 +22,55 @@
     a { color: #8ab4ff; }
     .muted { color: #9a9a9f; }
     hr { border-color: #33333a; }
-    summary { color: #e8e8e6; }
-    details p { color: #c7c7cc; }
+    details { border-bottom-color: #2a2a2e; }
+    .day-pill { border-color: #3a3a40; }
+    .day-pill.active { background: #e8e8e6; color: #17171a; }
   }
   h1 { font-size: 1.5rem; margin: 0 0 4px; font-weight: 700; }
-  .subtitle { margin: 0 0 28px; font-size: 0.92rem; }
+  .subtitle { margin: 0 0 24px; font-size: 0.92rem; }
   .muted { color: #6b6b70; }
-  h2 { font-size: 1.05rem; font-weight: 700; margin: 40px 0 4px; letter-spacing: 0.01em; }
+  h2 { font-size: 1.05rem; font-weight: 700; margin: 28px 0 4px; letter-spacing: 0.01em; }
   h2 .day-tag { display: inline-block; font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
   h3 { font-size: 0.9rem; font-weight: 600; margin: 20px 0 6px; }
   p { margin: 8px 0; }
   ol, ul { margin: 6px 0 0; padding-left: 20px; }
   li { margin: 3px 0; }
   hr { border: none; border-top: 1px solid #e4e4e0; margin: 28px 0 0; }
-  .warn {
-    font-size: 0.9rem; margin: 10px 0; padding-left: 12px;
-    border-left: 2px solid #c98a2b;
-  }
+  .warn { font-size: 0.9rem; margin: 10px 0; padding-left: 12px; border-left: 2px solid #c98a2b; }
   footer { margin-top: 56px; font-size: 0.8rem; }
   a { color: #0060df; }
+
+  .day-nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 8px 0 4px;
+  }
+  .day-pill {
+    font-size: 0.82rem;
+    padding: 6px 11px;
+    border: 1px solid #d8d8d4;
+    border-radius: 999px;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .day-pill.active { background: #1c1c1e; color: #fdfdfc; border-color: #1c1c1e; }
+  .show-all-toggle {
+    font-size: 0.82rem;
+    background: none;
+    border: none;
+    color: #0060df;
+    cursor: pointer;
+    padding: 6px 2px;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+
+  .day-section { display: none; }
+  .day-section.active { display: block; }
+  body.show-all .day-section { display: block; }
 
   details {
     margin: 10px 0;
@@ -60,24 +90,18 @@
   summary::-webkit-details-marker { display: none; }
   summary .ex-name { font-weight: 500; }
   summary .ex-sets { font-size: 0.85rem; white-space: nowrap; }
-  summary::after {
-    content: "+";
-    font-size: 1rem;
-    color: #9a9a9f;
-    flex-shrink: 0;
-  }
+  summary::after { content: "+"; font-size: 1rem; color: #9a9a9f; flex-shrink: 0; }
   details[open] summary::after { content: "–"; }
-  details p {
-    margin: 8px 0 0;
-    font-size: 0.88rem;
-    color: #55555a;
+  details p { margin: 8px 0 0; font-size: 0.88rem; color: #55555a; }
+  @media (prefers-color-scheme: dark) {
+    details p { color: #c7c7cc; }
   }
 </style>
 </head>
 <body>
 
 <h1>Программа тренировок</h1>
-<p class="subtitle muted">Силовые + кардио — v2, обновлено 2026-07-14. Нажми на упражнение, чтобы раскрыть технику.</p>
+<p class="subtitle muted">Силовые + кардио — v3. Показывает сегодняшний день, остальные — по кнопкам ниже.</p>
 
 <p>4 силовых дня по 30 минут (сплит верх/низ) + 2 кардио-дня. Оборудование: гантели разборные (до 12 кг, шаг 0.5 кг), штанга, скамья, кольцо для пилатеса.</p>
 
@@ -85,8 +109,20 @@
 Перед стартом — прочитай раздел «Ограничения» внизу страницы: про шею, локти и паховую грыжу. Это важно.
 </div>
 
+<div class="day-nav" id="day-nav">
+  <button class="day-pill" data-day="1">Пн</button>
+  <button class="day-pill" data-day="2">Вт</button>
+  <button class="day-pill" data-day="3">Ср</button>
+  <button class="day-pill" data-day="4">Чт</button>
+  <button class="day-pill" data-day="5">Пт</button>
+  <button class="day-pill" data-day="6">Сб</button>
+  <button class="day-pill" data-day="0">Вс</button>
+</div>
+<button class="show-all-toggle" id="show-all-btn">показать всю неделю</button>
+
 <hr>
 
+<section class="day-section" data-day="1">
 <h2>Понедельник <span class="day-tag muted">— Низ A</span></h2>
 
 <h3>Разминка с кольцом</h3>
@@ -120,9 +156,9 @@
   <summary><span class="ex-name">Кегель</span><span class="ex-sets muted">3×10-15</span></summary>
   <p>Сожми мышцы тазового дна (как будто останавливаешь мочеиспускание) на 5 сек, расслабь на 5 сек. Дыши свободно, не напрягай пресс и ягодицы.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="2">
 <h2>Вторник <span class="day-tag muted">— Верх A</span></h2>
 <details>
   <summary><span class="ex-name">Жим гантелей лёжа</span><span class="ex-sets muted">3×10-12</span></summary>
@@ -140,9 +176,9 @@
   <summary><span class="ex-name">Молотковые сгибания на бицепс</span><span class="ex-sets muted">2×12-15</span></summary>
   <p>Хват нейтральный (ладони друг к другу), сгибай без раскачки корпусом, опускай медленно.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="3">
 <h2>Среда <span class="day-tag muted">— Кардио лёгкое + Кегель</span></h2>
 <details>
   <summary><span class="ex-name">Кардио Zone 2</span><span class="ex-sets muted">20-25 мин</span></summary>
@@ -152,9 +188,9 @@
   <summary><span class="ex-name">Кегель</span><span class="ex-sets muted">3×10-15</span></summary>
   <p>Та же техника, что в понедельник. В любое удобное время дня.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="4">
 <h2>Четверг <span class="day-tag muted">— Низ B</span></h2>
 
 <h3>Разминка с кольцом</h3>
@@ -181,9 +217,9 @@
   <summary><span class="ex-name">Кегель</span><span class="ex-sets muted">3×10-15</span></summary>
   <p>Та же техника, что в понедельник.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="5">
 <h2>Пятница <span class="day-tag muted">— Верх B</span></h2>
 <details>
   <summary><span class="ex-name">Жим гантелей на наклонной скамье</span><span class="ex-sets muted">3×10-12</span></summary>
@@ -201,18 +237,20 @@
   <summary><span class="ex-name">Жим гантелей узким хватом лёжа</span><span class="ex-sets muted">2×12-15</span></summary>
   <p>Гантели близко друг к другу над грудью, жми, локти прижаты к корпусу, амплитуда укороченная — бережнее к локтям.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="6">
 <h2>Суббота <span class="day-tag muted">— Кардио активнее</span></h2>
 <details>
   <summary><span class="ex-name">Кардио</span><span class="ex-sets muted">25-30 мин</span></summary>
   <p>Темп чуть бодрее или интервалы: 1 мин быстрее / 2 мин спокойно, 6-8 циклов — по самочувствию.</p>
 </details>
+</section>
 
-<hr>
-
+<section class="day-section" data-day="0">
 <h2>Воскресенье <span class="day-tag muted">— Отдых</span></h2>
+<p class="muted">День восстановления. Можно лёгкую прогулку, но без структурированной нагрузки.</p>
+</section>
 
 <hr>
 
@@ -241,6 +279,33 @@
 <footer class="muted">
 Составлено Irina (General Practitioner, Kelly). Страница не индексируется поисковиками.
 </footer>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.day-section');
+  var pills = document.querySelectorAll('.day-pill');
+  var showAllBtn = document.getElementById('show-all-btn');
+
+  function showDay(d) {
+    document.body.classList.remove('show-all');
+    sections.forEach(function (s) { s.classList.toggle('active', s.dataset.day === String(d)); });
+    pills.forEach(function (p) { p.classList.toggle('active', p.dataset.day === String(d)); });
+    showAllBtn.textContent = 'показать всю неделю';
+  }
+
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () { showDay(p.dataset.day); });
+  });
+
+  showAllBtn.addEventListener('click', function () {
+    var isShowAll = document.body.classList.toggle('show-all');
+    showAllBtn.textContent = isShowAll ? 'показать только сегодня' : 'показать всю неделю';
+    if (!isShowAll) { showDay(String(new Date().getDay())); }
+  });
+
+  showDay(String(new Date().getDay()));
+})();
+</script>
 
 </body>
 </html>
