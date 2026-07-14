@@ -6,66 +6,81 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Программа тренировок</title>
 <style>
-  :root { color-scheme: light dark; }
+  :root {
+    color-scheme: light dark;
+    --accent: #2f6f5e;
+    --accent-soft: #4d8577;
+    --ink: #1c1c1e;
+    --ink-muted: #6b6b70;
+    --bg: #fdfdfc;
+    --line: #e7e5e0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #6fd9c0;
+      --accent-soft: #6fd9c0;
+      --ink: #ececea;
+      --ink-muted: #9a9a9f;
+      --bg: #17171a;
+      --line: #2c2c30;
+    }
+  }
   * { box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
     max-width: 680px;
     margin: 0 auto;
-    padding: 32px 20px 80px;
-    line-height: 1.55;
-    color: #1c1c1e;
-    background: #fdfdfc;
+    padding: 36px 20px 80px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--bg);
   }
-  @media (prefers-color-scheme: dark) {
-    body { color: #e8e8e6; background: #17171a; }
-    a { color: #8ab4ff; }
-    .muted { color: #9a9a9f; }
-    hr { border-color: #33333a; }
-    details { border-bottom-color: #2a2a2e; }
-    .day-pill { border-color: #3a3a40; }
-    .day-pill.active { background: #e8e8e6; color: #17171a; }
-  }
-  h1 { font-size: 1.5rem; margin: 0 0 4px; font-weight: 700; }
+  a { color: var(--accent); }
+  .muted { color: var(--ink-muted); }
+
+  h1 { font-size: 1.55rem; margin: 0 0 4px; font-weight: 800; letter-spacing: -0.01em; }
   .subtitle { margin: 0 0 24px; font-size: 0.92rem; }
-  .muted { color: #6b6b70; }
-  h2 { font-size: 1.05rem; font-weight: 700; margin: 28px 0 4px; letter-spacing: 0.01em; }
-  h2 .day-tag { display: inline-block; font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
-  h3 { font-size: 0.9rem; font-weight: 600; margin: 20px 0 6px; }
+
+  h2 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin: 32px 0 12px;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+  }
+  h2 .day-tag { display: inline-block; font-weight: 400; font-size: 0.85rem; margin-left: 8px; color: var(--ink-muted); }
+  h3 { font-size: 0.82rem; font-weight: 700; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+
   p { margin: 8px 0; }
   ol, ul { margin: 6px 0 0; padding-left: 20px; }
-  li { margin: 3px 0; }
-  hr { border: none; border-top: 1px solid #e4e4e0; margin: 28px 0 0; }
-  .warn { font-size: 0.9rem; margin: 10px 0; padding-left: 12px; border-left: 2px solid #c98a2b; }
+  li { margin: 4px 0; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 32px 0 0; }
+  .warn { font-size: 0.9rem; margin: 14px 0; padding-left: 12px; border-left: 2px solid #c98a2b; }
   footer { margin-top: 56px; font-size: 0.8rem; }
-  a { color: #0060df; }
 
-  .day-nav {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin: 8px 0 4px;
-  }
+  .day-nav { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0 6px; }
   .day-pill {
     font-size: 0.82rem;
-    padding: 6px 11px;
-    border: 1px solid #d8d8d4;
+    font-weight: 600;
+    padding: 7px 13px;
+    border: 1px solid var(--line);
     border-radius: 999px;
     background: none;
-    color: inherit;
+    color: var(--ink-muted);
     cursor: pointer;
     font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
-  .day-pill.active { background: #1c1c1e; color: #fdfdfc; border-color: #1c1c1e; }
+  .day-pill.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
   .show-all-toggle {
     font-size: 0.82rem;
     background: none;
     border: none;
-    color: #0060df;
+    color: var(--accent);
     cursor: pointer;
-    padding: 6px 2px;
+    padding: 8px 2px;
     font-family: inherit;
-    text-decoration: underline;
   }
 
   .day-section { display: none; }
@@ -73,14 +88,14 @@
   body.show-all .day-section { display: block; }
 
   details {
-    margin: 10px 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ececea;
+    margin: 4px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
   }
   details:last-child { border-bottom: none; }
   summary {
     cursor: pointer;
-    font-size: 0.98rem;
+    font-size: 1rem;
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -89,19 +104,16 @@
   }
   summary::-webkit-details-marker { display: none; }
   summary .ex-name { font-weight: 500; }
-  summary .ex-sets { font-size: 0.85rem; white-space: nowrap; }
-  summary::after { content: "+"; font-size: 1rem; color: #9a9a9f; flex-shrink: 0; }
+  summary .ex-sets { font-size: 0.84rem; font-weight: 600; color: var(--accent-soft); white-space: nowrap; }
+  summary::after { content: "+"; font-size: 1.05rem; color: var(--ink-muted); flex-shrink: 0; }
   details[open] summary::after { content: "–"; }
-  details p { margin: 8px 0 0; font-size: 0.88rem; color: #55555a; }
-  @media (prefers-color-scheme: dark) {
-    details p { color: #c7c7cc; }
-  }
+  details p { margin: 10px 0 0; font-size: 0.88rem; color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
 <h1>Программа тренировок</h1>
-<p class="subtitle muted">Силовые + кардио — v3. Показывает сегодняшний день, остальные — по кнопкам ниже.</p>
+<p class="subtitle muted">Силовые + кардио + питание — v4. Показывает сегодняшний день, остальные — по кнопкам ниже.</p>
 
 <p>4 силовых дня по 30 минут (сплит верх/низ) + 2 кардио-дня. Оборудование: гантели разборные (до 12 кг, шаг 0.5 кг), штанга, скамья, кольцо для пилатеса.</p>
 
@@ -261,6 +273,19 @@
   <li>Каждые 5-6 недель — разгрузочная неделя: тот же план, вес и объём ниже на 30-40%.</li>
   <li>12 кг на гантель хватит надолго для ног, но жим/тяга/присед упрутся в потолок быстрее — как только 12 кг × 12 даётся технично, переходи на штангу в том же упражнении.</li>
 </ul>
+
+<hr>
+
+<h2>Питание</h2>
+<p>Ориентиры под твои цифры (84 кг, 183 см, цель — сила + рельеф):</p>
+<ul>
+  <li><strong>Белок:</strong> ~150-160 г/день (1.8 г/кг) — главный параметр для роста силы и сохранения мышц при снижении жира. 4 приёма примерно по 35-40 г (мясо/рыба/яйца/творог/бобовые).</li>
+  <li><strong>Калории:</strong> ориентировочно 2300-2500 ккал/день для плавного снижения жира без потери результатов (лёгкий дефицит от расчётной нормы ~2700-2900 ккал при твоей активности). Вес не двигается 2-3 недели, а на тренировках всё в порядке — не трогай; нет сдвига за месяц — скорректируем.</li>
+  <li><strong>Вода:</strong> ~3 л/день, больше в дни с кардио.</li>
+  <li><strong>Тайминг:</strong> белок+углеводы за 1-2 часа до тренировки, белковый приём в течение нескольких часов после — специально бежать есть сразу не нужно, важен суммарный белок за день, а не узкое «анаболическое окно».</li>
+  <li>Алкоголь и сон — см. «Ограничения» ниже: они съедают часть эффекта от правильного питания.</li>
+</ul>
+<p class="muted" style="font-size:0.88rem">Это ориентиры, не жёсткий план. Нужна подробная раскладка по приёмам пищи — скажи, сделаю отдельно.</p>
 
 <hr>
 
